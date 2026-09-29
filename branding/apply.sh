@@ -32,20 +32,7 @@ rep ./libs/hbb_common/src/config.rs "s|RwLock::new(\"RustDesk\".to_owned())|RwLo
 find ./src/lang -name "*.rs" -exec sed -i -e "s|RustDesk|$APP_NAME|g" {} \;
 
 echo "== registry commands must survive a space in the app name"
-W=./src/platform/windows.rs
-sed -i -e 's|reg add {}|reg add \\"{}\\"|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\.{ext} /f|reg add \\"HKEY_CLASSES_ROOT\\.{ext}\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\.{ext}\\DefaultIcon /f|reg add \\"HKEY_CLASSES_ROOT\\.{ext}\\DefaultIcon\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\.{ext}\\shell /f|reg add \\"HKEY_CLASSES_ROOT\\.{ext}\\shell\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\.{ext}\\shell\\open /f|reg add \\"HKEY_CLASSES_ROOT\\.{ext}\\shell\\open\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\.{ext}\\shell\\open\\command|reg add \\"HKEY_CLASSES_ROOT\\.{ext}\\shell\\open\\command\\"|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\{ext} /f|reg add \\"HKEY_CLASSES_ROOT\\{ext}\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\{ext}\\shell /f|reg add \\"HKEY_CLASSES_ROOT\\{ext}\\shell\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\{ext}\\shell\\open /f|reg add \\"HKEY_CLASSES_ROOT\\{ext}\\shell\\open\\" /f|' \
-  -e 's|reg add HKEY_CLASSES_ROOT\\{ext}\\shell\\open\\command /f|reg add \\"HKEY_CLASSES_ROOT\\{ext}\\shell\\open\\command\\" /f|' \
-  -e 's|{subkey}|\\"{subkey}\\"|' \
-  -e 's|reg delete HKEY_CLASSES_ROOT\\.{ext} /f|reg delete \\"HKEY_CLASSES_ROOT\\.{ext}\\" /f|' \
-  -e 's|reg delete HKEY_CLASSES_ROOT\\{ext} /f|reg delete \\"HKEY_CLASSES_ROOT\\{ext}\\" /f|' "$W"
+"${PYTHON:-python3}" "$HERE/patch_registry.py"
 
 echo "== publisher (upstream copyright notices stay untouched)"
 rep ./flutter/windows/runner/Runner.rc "s|VALUE \"CompanyName\", \"Purslane Tech Pte. Ltd.\"|VALUE \"CompanyName\", \"$COMPANY\"|" "\"CompanyName\", \"$COMPANY\""
