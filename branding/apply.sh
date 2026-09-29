@@ -37,6 +37,13 @@ echo "== registry commands must survive a space in the app name"
 echo "== publisher (upstream copyright notices stay untouched)"
 rep ./flutter/windows/runner/Runner.rc "s|VALUE \"CompanyName\", \"Purslane Tech Pte. Ltd.\"|VALUE \"CompanyName\", \"$COMPANY\"|" "\"CompanyName\", \"$COMPANY\""
 rep ./res/msi/preprocess.py "s|default=\"Purslane Tech Pte. Ltd.\"|default=\"$COMPANY\"|" "default=\"$COMPANY\""
+for f in ./Cargo.toml ./libs/portable/Cargo.toml; do
+  sed -i -e "/^ProductName = \"$APP_NAME\"/a CompanyName = \"$COMPANY\"" "$f"
+  grep -qF "CompanyName = \"$COMPANY\"" "$f" || { echo "PATCH FAILED: CompanyName in $f"; exit 1; }
+done
+
+echo "== INTO colours"
+"${PYTHON:-python3}" "$HERE/patch_theme.py"
 
 echo "== links"
 sed -i -e "s|Homepage: https://rustdesk.com|Homepage: $HOMEPAGE|" ./build.py

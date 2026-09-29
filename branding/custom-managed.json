@@ -7,7 +7,8 @@
     "key": "9E05hQt6D+duTtHRmZIQrkIjrlbE5T32JNxqHR6Gs04=",
     "enable-check-update": "N",
     "allow-auto-update": "N",
-    "approve-mode": "click"
+    "approve-mode": "password",
+    "verification-method": "use-permanent-password"
   },
   "default-settings": {
     "enable-lan-discovery": "N"

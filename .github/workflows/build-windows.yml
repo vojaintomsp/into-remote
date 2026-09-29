@@ -262,6 +262,15 @@ jobs:
           python3 ./generate.py -f ../../rustdesk/ -o . -e "../../rustdesk/${APP_NAME}.exe"
           popd
           mv ./target/release/rustdesk-portable-packer.exe "./out/INTO-Remote-Tech.exe"
+
+      - name: Pack managed client (incoming only, permanent password set per machine at install)
+        shell: bash
+        run: |
+          python3 _into/branding/pack-config.py _into/branding/custom-managed.json ./rustdesk/custom_.txt
+          pushd ./libs/portable
+          python3 ./generate.py -f ../../rustdesk/ -o . -e "../../rustdesk/${APP_NAME}.exe"
+          popd
+          mv ./target/release/rustdesk-portable-packer.exe "./out/INTO-Remote-Managed.exe"
           cd out && sha256sum * | tee SHA256SUMS.txt
 
       - name: Upload public client
@@ -273,11 +282,13 @@ jobs:
             out/INTO-Remote.msi
             out/SHA256SUMS.txt
 
-      - name: Upload technician client
+      - name: Upload internal clients (technician, managed)
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: into-remote-tech
-          path: out/INTO-Remote-Tech.exe
+          name: into-remote-internal
+          path: |
+            out/INTO-Remote-Tech.exe
+            out/INTO-Remote-Managed.exe
 
       - name: Publish release (public client only)
         if: ${{ inputs.release }}

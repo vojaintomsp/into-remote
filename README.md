@@ -12,7 +12,8 @@ Everything we change is in this repository, nothing else:
 |---|---|
 | `branding/apply.sh` | patches applied on top of the unmodified RustDesk source (name, icon, links, our rendezvous server, no upstream update prompts) |
 | `branding/config.env` | name, links, server address and server public key |
-| `branding/custom-client.json` | settings of the public client (it can only receive connections) |
+| `branding/custom-client.json` | settings of the public client (it can only receive connections, every session must be accepted by the person at the computer) |
+| `branding/patch_theme.py` | INTO colours inside the app |
 | `branding/icon.*` | application icon |
 | `.github/workflows/build-windows.yml` | reproducible build on GitHub Actions |
 
