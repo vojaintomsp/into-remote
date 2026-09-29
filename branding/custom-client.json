@@ -3,11 +3,12 @@
   "conn-type": "incoming",
   "enable-lan-discovery": "N",
   "override-settings": {
-    "custom-rendezvous-server": "e1f10e2cc176.sn.mynetname.net",
-    "key": "9E05hQt6D+duTtHRmZIQrkIjrlbE5T32JNxqHR6Gs04=",
+    "custom-rendezvous-server": "@SERVER_HOST@",
+    "key": "@SERVER_KEY@",
     "enable-check-update": "N",
     "allow-auto-update": "N",
-    "approve-mode": "click"
+    "approve-mode": "click",
+    "hide-server-settings": "Y"
   },
   "default-settings": {
     "enable-lan-discovery": "N"

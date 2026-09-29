@@ -11,7 +11,7 @@ Everything we change is in this repository, nothing else:
 | File | Purpose |
 |---|---|
 | `branding/apply.sh` | patches applied on top of the unmodified RustDesk source (name, icon, links, our rendezvous server, no upstream update prompts) |
-| `branding/config.env` | name, links, server address and server public key |
+| `branding/config.env` | name and links (server address and key are supplied at build time) |
 | `branding/custom-client.json` | settings of the public client (it can only receive connections, every session must be accepted by the person at the computer) |
 | `branding/patch_theme.py` | INTO colours inside the app |
 | `branding/icon.*` | application icon |
@@ -23,7 +23,7 @@ The complete corresponding source is the RustDesk source at the tag named in `br
 
 ```
 git clone --recursive --branch 1.4.9 https://github.com/rustdesk/rustdesk
-cd rustdesk && bash ../into-remote/branding/apply.sh
+cd rustdesk && SERVER_HOST=<your server> SERVER_KEY=<your key> bash ../into-remote/branding/apply.sh
 ```
 
 ## License

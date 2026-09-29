@@ -5,6 +5,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$HERE/config.env"
+: "${SERVER_HOST:?SERVER_HOST is not set}" "${SERVER_KEY:?SERVER_KEY is not set}"
 
 need() { [ -f "$1" ] || { echo "missing: $1"; exit 1; }; }
 need ./libs/hbb_common/src/config.rs; need ./src/common.rs; need ./Cargo.toml
