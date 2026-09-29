@@ -1,0 +1,14 @@
+{
+  "app-name": "INTO Remote",
+  "conn-type": "incoming",
+  "enable-lan-discovery": "N",
+  "override-settings": {
+    "custom-rendezvous-server": "e1f10e2cc176.sn.mynetname.net",
+    "key": "9E05hQt6D+duTtHRmZIQrkIjrlbE5T32JNxqHR6Gs04=",
+    "enable-check-update": "N",
+    "allow-auto-update": "N"
+  },
+  "default-settings": {
+    "enable-lan-discovery": "N"
+  }
+}
