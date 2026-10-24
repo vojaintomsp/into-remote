@@ -27,7 +27,7 @@ env:
   FLUTTER_RUST_BRIDGE_VERSION: "1.80.1"
   VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
   VCPKG_COMMIT_ID: "9e593bb18ea69cc5095e012465dcd675a822ed0d"
-  APP_NAME: "INTO Remote"
+  APP_NAME: "INTO-Remote"
 
 jobs:
   bridge:
@@ -247,7 +247,7 @@ jobs:
       - name: Build msi (public client)
         continue-on-error: true
         run: |
-          cp "rustdesk/INTO Remote.exe" "rustdesk/INTO_Remote.exe"
+          cp "rustdesk/INTO-Remote.exe" "rustdesk/INTO_Remote.exe"
           pushd ./res/msi
           python preprocess.py --app-name "INTO_Remote" --arp -d ../../rustdesk
           nuget restore msi.sln

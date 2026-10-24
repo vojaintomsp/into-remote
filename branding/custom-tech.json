@@ -1,5 +1,5 @@
 {
-  "app-name": "INTO Remote",
+  "app-name": "INTO-Remote",
   "enable-lan-discovery": "N",
   "override-settings": {
     "custom-rendezvous-server": "@SERVER_HOST@",

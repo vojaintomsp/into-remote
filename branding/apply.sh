@@ -6,6 +6,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$HERE/config.env"
 : "${SERVER_HOST:?SERVER_HOST is not set}" "${SERVER_KEY:?SERVER_KEY is not set}"
+[[ "$APP_NAME" =~ ^[A-Za-z0-9-]+$ ]] || { echo "APP_NAME must match [a-zA-Z0-9-]+ (RustDesk 1.5.0 installer rule)"; exit 1; }
 
 need() { [ -f "$1" ] || { echo "missing: $1"; exit 1; }; }
 need ./libs/hbb_common/src/config.rs; need ./src/common.rs; need ./Cargo.toml
@@ -17,20 +18,20 @@ rep() { # rep <file> <sed-expr> <grep-check>
 
 echo "== app name"
 for f in ./Cargo.toml ./libs/portable/Cargo.toml; do
-  sed -i -e "s|description = \"RustDesk Remote Desktop\"|description = \"$APP_NAME\"|" \
+  sed -i -e "s|description = \"RustDesk Remote Desktop\"|description = \"$DISPLAY_NAME\"|" \
          -e "s|ProductName = \"RustDesk\"|ProductName = \"$APP_NAME\"|" \
-         -e "s|FileDescription = \"RustDesk Remote Desktop\"|FileDescription = \"$APP_NAME\"|" \
+         -e "s|FileDescription = \"RustDesk Remote Desktop\"|FileDescription = \"$DISPLAY_NAME\"|" \
          -e "s|OriginalFilename = \"rustdesk.exe\"|OriginalFilename = \"$APP_NAME.exe\"|" "$f"
   grep -qF "ProductName = \"$APP_NAME\"" "$f" || { echo "PATCH FAILED: $f"; exit 1; }
 done
 rep ./libs/portable/src/main.rs "s|const APP_PREFIX: \&str = \"rustdesk\";|const APP_PREFIX: \&str = \"into-remote\";|" 'APP_PREFIX: &str = "into-remote"'
-sed -i -e "s|\"RustDesk Remote Desktop\"|\"$APP_NAME\"|" \
+sed -i -e "s|\"RustDesk Remote Desktop\"|\"$DISPLAY_NAME\"|" \
        -e "s|VALUE \"InternalName\", \"rustdesk\" \"\\0\"|VALUE \"InternalName\", \"$APP_NAME\" \"\\0\"|" \
        -e "s|\"rustdesk.exe\"|\"$APP_NAME.exe\"|" \
        -e "s|\"RustDesk\"|\"$APP_NAME\"|" ./flutter/windows/runner/Runner.rc
 grep -qF "\"$APP_NAME\"" ./flutter/windows/runner/Runner.rc || { echo "PATCH FAILED: Runner.rc"; exit 1; }
 rep ./libs/hbb_common/src/config.rs "s|RwLock::new(\"RustDesk\".to_owned())|RwLock::new(\"$APP_NAME\".to_owned())|" "RwLock::new(\"$APP_NAME\".to_owned())"
-find ./src/lang -name "*.rs" -exec sed -i -e "s|RustDesk|$APP_NAME|g" {} \;
+find ./src/lang -name "*.rs" -exec sed -i -e "s|RustDesk|$DISPLAY_NAME|g" {} \;
 
 echo "== registry commands must survive a space in the app name"
 "${PYTHON:-python3}" "$HERE/patch_registry.py"
@@ -84,6 +85,9 @@ cp "$HERE/icon.ico" ./res/icon.ico
 cp "$HERE/icon.ico" ./res/tray-icon.ico
 cp "$HERE/icon.ico" ./flutter/windows/runner/resources/app_icon.ico
 cp "$HERE/icon.svg" ./flutter/assets/icon.svg
+# tray (src/tray.rs) and window (win32_window.cpp) prefer flutter_assets/assets/icon.png|.ico when present
+cp "$HERE/png/128x128.png" ./flutter/assets/icon.png
+cp "$HERE/icon.ico" ./flutter/assets/icon.ico
 for s in 32 64 128; do cp "$HERE/png/${s}x${s}.png" "./res/${s}x${s}.png"; done
 cp "$HERE/png/128x128@2x.png" "./res/128x128@2x.png"
 b64=$(base64 -w0 < "$HERE/png/128x128.png")

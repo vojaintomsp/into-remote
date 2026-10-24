@@ -1,5 +1,5 @@
 {
-  "app-name": "INTO Remote",
+  "app-name": "INTO-Remote",
   "conn-type": "incoming",
   "enable-lan-discovery": "N",
   "override-settings": {

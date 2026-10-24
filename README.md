@@ -1,5 +1,7 @@
 # INTO Remote
 
+Technical app name (exe, service, folders): `INTO-Remote` (RustDesk 1.5.0 requires `[a-zA-Z0-9-]+`); display name in UI texts: `INTO Remote`.
+
 Remote support client of [INTO d.o.o. Beograd](https://www.intomsp.com), used by our technicians to help customers on their computers.
 
 INTO Remote is a customized build of [RustDesk](https://github.com/rustdesk/rustdesk). It is **not** an official RustDesk product and is not affiliated with or endorsed by the RustDesk authors.
