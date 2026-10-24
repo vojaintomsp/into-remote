@@ -22,7 +22,7 @@ Everything we change is in this repository, nothing else:
 The complete corresponding source is the RustDesk source at the tag named in `branding/config.env` (`RUSTDESK_VERSION`) with `branding/apply.sh` applied:
 
 ```
-git clone --recursive --branch 1.4.9 https://github.com/rustdesk/rustdesk
+git clone --recursive --branch 1.5.0 https://github.com/rustdesk/rustdesk
 cd rustdesk && SERVER_HOST=<your server> SERVER_KEY=<your key> bash ../into-remote/branding/apply.sh
 ```
 
