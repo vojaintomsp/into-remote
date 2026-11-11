@@ -17,7 +17,7 @@ permissions:
 
 env:
   # toolchain versions follow upstream .github/workflows/flutter-build.yml at the same tag
-  RUSTDESK_VERSION: "1.5.0"
+  RUSTDESK_VERSION: "1.5.1"
   SCITER_RUST_VERSION: "1.75"
   RUST_VERSION: "1.75"
   LLVM_VERSION: "15.0.6"
@@ -90,7 +90,7 @@ jobs:
             ./flutter/ios/Runner/bridge_generated.h
 
   topmost-window:
-    uses: rustdesk/rustdesk/.github/workflows/third-party-RustDeskTempTopMostWindow.yml@1.5.0
+    uses: rustdesk/rustdesk/.github/workflows/third-party-RustDeskTempTopMostWindow.yml@1.5.1
     with:
       upload-artifact: true
       target: windows-2022
@@ -289,6 +289,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: into-remote-internal
+          retention-days: 3
           path: |
             out/INTO-Remote-Tech.exe
             out/INTO-Remote-Managed.exe

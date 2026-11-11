@@ -33,9 +33,6 @@ grep -qF "\"$APP_NAME\"" ./flutter/windows/runner/Runner.rc || { echo "PATCH FAI
 rep ./libs/hbb_common/src/config.rs "s|RwLock::new(\"RustDesk\".to_owned())|RwLock::new(\"$APP_NAME\".to_owned())|" "RwLock::new(\"$APP_NAME\".to_owned())"
 find ./src/lang -name "*.rs" -exec sed -i -e "s|RustDesk|$DISPLAY_NAME|g" {} \;
 
-echo "== registry commands must survive a space in the app name"
-"${PYTHON:-python3}" "$HERE/patch_registry.py"
-
 echo "== publisher (upstream copyright notices stay untouched)"
 rep ./flutter/windows/runner/Runner.rc "s|VALUE \"CompanyName\", \"Purslane Tech Pte. Ltd.\"|VALUE \"CompanyName\", \"$COMPANY\"|" "\"CompanyName\", \"$COMPANY\""
 rep ./res/msi/preprocess.py "s|default=\"Purslane Tech Pte. Ltd.\"|default=\"$COMPANY\"|" "default=\"$COMPANY\""

@@ -9,6 +9,8 @@
     "allow-auto-update": "N",
     "approve-mode": "password",
     "verification-method": "use-permanent-password",
+    "enable-terminal": "Y",
+    "enable-tunnel": "Y",
     "hide-server-settings": "Y"
   },
   "default-settings": {
